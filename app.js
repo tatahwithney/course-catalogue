@@ -7,6 +7,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI;
 
+const courseRoutes = require("./routes/courseRoutes");
+
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 
@@ -17,6 +19,8 @@ app.set("view engine", "ejs");
 app.get("/", (req, res) => {
     res.render("home");
 });
+
+app.use("/courses", courseRoutes);
 
 // MongoDB connection
 mongoose
