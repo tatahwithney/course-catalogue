@@ -1,9 +1,11 @@
 const express = require("express");
+const mongoose = require("mongoose");
 require("dotenv").config();
 
 const app = express();
 
 const PORT = process.env.PORT || 3000;
+const MONGO_URI = process.env.MONGO_URI;
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -16,7 +18,16 @@ app.get("/", (req, res) => {
     res.render("home");
 });
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+// MongoDB connection
+mongoose
+    .connect(MONGO_URI)
+    .then(() => {
+        console.log("MongoDB connected successfully");
+
+        app.listen(PORT, () => {
+            console.log(`Server running on port ${PORT}`);
+        });
+    })
+    .catch((error) => {
+        console.error("MongoDB connection failed:", error.message);
+    });
