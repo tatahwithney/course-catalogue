@@ -2,12 +2,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
+const courseRoutes = require("./routes/courseRoutes");
+const pageRoutes = require("./routes/pageRoutes");
+
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI;
-
-const courseRoutes = require("./routes/courseRoutes");
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -15,11 +16,10 @@ app.use(express.urlencoded({ extended: true }));
 // View engine
 app.set("view engine", "ejs");
 
-// Home route
-app.get("/", (req, res) => {
-    res.render("home");
-});
+// Page routes
+app.use("/", pageRoutes);
 
+// Course routes
 app.use("/courses", courseRoutes);
 
 // MongoDB connection
