@@ -1,9 +1,9 @@
-const Course = require("../models/course");
+const courseService = require("../services/courseService");
 
 // Display all courses
 exports.getAllCourses = async (req, res, next) => {
     try {
-        const courses = await Course.find();
+        const courses = await courseService.getAllCourses();
 
         res.render("courses/index", {
             courses
@@ -26,7 +26,7 @@ exports.createCourse = async (req, res, next) => {
     try {
         const { name, description, duration, instructor, maxStudents } = req.body;
 
-        await Course.create({
+        await courseService.createCourse({
             name,
             description,
             duration,
@@ -34,7 +34,6 @@ exports.createCourse = async (req, res, next) => {
             maxStudents
         });
 
-        // PRG: POST -> Redirect -> GET
         res.redirect("/courses");
     } catch (error) {
         if (error.name === "ValidationError") {
@@ -57,7 +56,7 @@ exports.createCourse = async (req, res, next) => {
 // Display one course
 exports.getCourse = async (req, res, next) => {
     try {
-        const course = await Course.findById(req.params.id);
+        const course = await courseService.getCourseById(req.params.id);
 
         if (!course) {
             return res.status(404).render("404");
@@ -74,7 +73,7 @@ exports.getCourse = async (req, res, next) => {
 // Display edit form
 exports.showEditForm = async (req, res, next) => {
     try {
-        const course = await Course.findById(req.params.id);
+        const course = await courseService.getCourseById(req.params.id);
 
         if (!course) {
             return res.status(404).render("404");
@@ -94,30 +93,22 @@ exports.updateCourse = async (req, res, next) => {
     try {
         const { name, description, duration, instructor, maxStudents } = req.body;
 
-        const course = await Course.findByIdAndUpdate(
-            req.params.id,
-            {
-                name,
-                description,
-                duration,
-                instructor,
-                maxStudents
-            },
-            {
-                new: true,
-                runValidators: true
-            }
-        );
+        const course = await courseService.updateCourse(req.params.id, {
+            name,
+            description,
+            duration,
+            instructor,
+            maxStudents
+        });
 
         if (!course) {
             return res.status(404).render("404");
         }
 
-        // PRG: POST -> Redirect -> GET
         res.redirect(`/courses/${course._id}`);
     } catch (error) {
         if (error.name === "ValidationError") {
-            const course = await Course.findById(req.params.id);
+            const course = await courseService.getCourseById(req.params.id);
 
             if (!course) {
                 return res.status(404).render("404");
@@ -145,13 +136,12 @@ exports.updateCourse = async (req, res, next) => {
 // Delete a course
 exports.deleteCourse = async (req, res, next) => {
     try {
-        const course = await Course.findByIdAndDelete(req.params.id);
+        const course = await courseService.deleteCourse(req.params.id);
 
         if (!course) {
             return res.status(404).render("404");
         }
 
-        // PRG: POST -> Redirect -> GET
         res.redirect("/courses");
     } catch (error) {
         next(error);
