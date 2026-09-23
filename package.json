@@ -1,0 +1,27 @@
+{
+  "name": "course-catalogue",
+  "version": "1.0.0",
+  "description": "A server-rendered Course Catalogue with:  Course name, Description, Duration in weeks, Instructor, Maximum students",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tatahwithney/course-catalogue.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/tatahwithney/course-catalogue/issues"
+  },
+  "homepage": "https://github.com/tatahwithney/course-catalogue#readme",
+  "dependencies": {
+    "dotenv": "^18.0.3",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "mongoose": "^9.10.2"
+  }
+}
