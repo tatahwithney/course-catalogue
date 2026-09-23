@@ -1,0 +1,29 @@
+<%- include("../partials/header") %>
+
+<h2>Courses</h2>
+
+<% if (courses.length === 0) { %>
+    <p>No courses available yet.</p>
+<% } else { %>
+    <% courses.forEach(course => { %>
+        <article>
+            <h3>
+                <a href="/courses/<%= course._id %>">
+                    <%= course.name %>
+                </a>
+            </h3>
+
+            <p><strong>Instructor:</strong> <%= course.instructor %></p>
+            <p><strong>Duration:</strong> <%= course.duration %> weeks</p>
+            <p><strong>Maximum Students:</strong> <%= course.maxStudents %></p>
+        </article>
+
+        <hr>
+    <% }) %>
+<% } %>
+
+<p>
+    <a href="/courses/new">Add New Course</a>
+</p>
+
+<%- include("../partials/footer") %>

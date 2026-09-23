@@ -1,0 +1,37 @@
+<%- include("../partials/header") %>
+
+<h2><%= course.name %></h2>
+
+<p>
+    <strong>Description:</strong>
+    <%= course.description %>
+</p>
+
+<p>
+    <strong>Duration:</strong>
+    <%= course.duration %> weeks
+</p>
+
+<p>
+    <strong>Instructor:</strong>
+    <%= course.instructor %>
+</p>
+
+<p>
+    <strong>Maximum Students:</strong>
+    <%= course.maxStudents %>
+</p>
+
+<p>
+    <a href="/courses/<%= course._id %>/edit">Edit Course</a>
+</p>
+
+<form action="/courses/<%= course._id %>/delete" method="POST">
+    <button type="submit">Delete Course</button>
+</form>
+
+<p>
+    <a href="/courses">Back to Courses</a>
+</p>
+
+<%- include("../partials/footer") %>
