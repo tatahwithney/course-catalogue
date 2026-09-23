@@ -22,6 +22,20 @@ app.use("/", pageRoutes);
 // Course routes
 app.use("/courses", courseRoutes);
 
+// 404 handler
+app.use((req, res) => {
+    res.status(404).render("404");
+});
+
+// Central error handler
+app.use((err, req, res, next) => {
+    console.error(err);
+
+    res.status(500).render("error", {
+        message: err.message || "Internal Server Error"
+    });
+});
+
 // MongoDB connection
 mongoose
     .connect(MONGO_URI)
